@@ -1,23 +1,26 @@
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import CreateCabinForm from "./CreateCabinForm";
-import CabinTable from "./CabinTable";
 function AddCabin() {
-  return <Modal >
-    <Modal.Open opensWindowName="cabin-form">
-      <Button>Add new cabin</Button>
-    </Modal.Open>
-    <Modal.Window name="cabin-form">
-      <CreateCabinForm onCloseModal={() => {}} />
-    </Modal.Window>
+  return (
+    <div>
+      <Modal>
+        <Modal.Open opens="cabin-form">
+          <Button>Add new cabin</Button>
+        </Modal.Open>
+        <Modal.Window name="cabin-form">
+          <CreateCabinForm onCloseModal={() => {}} />
+        </Modal.Window>
 
-    <Modal.Open opensWindowName="cabin-table">
+        {/* <Modal.Open opensWindowName="cabin-table">
       <Button>Show table</Button>
     </Modal.Open>
     <Modal.Window name="cabin-table">
       <CabinTable />
-    </Modal.Window>
-  </Modal>
+    </Modal.Window> */}
+      </Modal>
+    </div>
+  );
 }
 export default AddCabin;
 // export default function AddCabin() {

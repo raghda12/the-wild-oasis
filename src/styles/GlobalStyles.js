@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+
 const GlobalStyles = createGlobalStyle`
 :root {
   /* Indigo */
@@ -73,6 +74,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-grey-700);
+
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
@@ -140,5 +142,7 @@ img {
   /* For dark mode */
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
+
 `;
+
 export default GlobalStyles;
