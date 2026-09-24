@@ -16,7 +16,7 @@ import PageNotFound from "./pages/PageNotFound";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./ui/ProtectedRoute";
-
+import { DarkModeProvider } from "./context/DarkModeContext";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -27,7 +27,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <>
+    <DarkModeProvider>
     <ToastContainer/>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
@@ -70,6 +70,6 @@ export default function App() {
           }}
         />
       </QueryClientProvider>
-    </>
+    </DarkModeProvider>
   );
 }
