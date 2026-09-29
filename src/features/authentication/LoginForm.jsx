@@ -1,29 +1,47 @@
 import { useState } from "react";
+import styled from "styled-components";
 import Button from "../../ui/Button";
-import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
-import SpinnerMini from "../../ui/SpinnerMini"
+import SpinnerMini from "../../ui/SpinnerMini";
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  & input {
+    height: 5rem;
+  }
+
+  & button[type="submit"] {
+    width: 100%;
+    margin-top: 1rem;
+  }
+`;
 
 function LoginForm() {
   const [email, setEmail] = useState("raghda@gmail.com");
   const [password, setPassword] = useState("115raghda");
-const {login , isLoading}=useLogin();
-  function handleSubmit(e) {
-    e.preventDefault()
-     if(!email || !password) return 
-     login({email, password},{
-      onSettled:()=>{
-        setEmail("");
-        setPassword("");
-      }
-     });
+  const { login, isLoading } = useLogin();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email || !password) return;
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      },
+    );
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <FormRowVertical label="Email address">
         <Input
           type="email"
@@ -45,10 +63,10 @@ const {login , isLoading}=useLogin();
           disabled={isLoading}
         />
       </FormRowVertical>
-      <FormRowVertical>
-        <Button size="large" disabled={isLoading}>{!isLoading ? 'log in':  <SpinnerMini/>}</Button>
-      </FormRowVertical>
-    </Form>
+      <Button type="submit" size="large" disabled={isLoading}>
+        {!isLoading ? "Log in" : <SpinnerMini />}
+      </Button>
+    </StyledForm>
   );
 }
 

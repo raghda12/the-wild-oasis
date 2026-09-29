@@ -78,3 +78,21 @@ export async function deleteCabin(id) {
   }
   return data;
 }
+
+export async function searchCabins(term) {
+  const q = term.replace(/[,()%*\\]/g, " ").trim();
+  if (!q) return [];
+
+  const { data, error } = await supabase
+    .from("cabins")
+    .select("id, name, image, maxCapacity")
+    .ilike("name", `%${q}%`)
+    .order("name")
+    .limit(4);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabins could not be searched");
+  }
+  return data;
+}

@@ -2,10 +2,9 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 import {PAGE_SIZE} from "../utils/constants"
 export async function getBookings({filter , sortBy , page}){
-  let query=supabase.from("bookings").select("id , startDate, endDate , numNights , numGuests, status, totalPrice , cabins(name) , guests(fullName , email)" , {count:"exact"});
+  let query=supabase.from("bookings").select("id , startDate, endDate , numNights , numGuests, status, totalPrice , cabins(name, image) , guests(fullName , email)" , {count:"exact"});
  // FILTER
- if(filter) query=query[filter.method || "eq"](filter.filed , filter.value);
- // SORT
+if (filter) query = query[filter.method || "eq"](filter.field, filter.value); // SORT
  if(sortBy) query=query.order(sortBy.field, { ascending: sortBy.direction === "asc" });
 
  if(page)  {
@@ -36,6 +35,7 @@ export async function getBooking(id) {
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
+//data: ISOString
 export async function getBookingsAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
@@ -111,6 +111,58 @@ export async function deleteBooking(id) {
   if (error) {
     console.error(error);
     throw new Error("Booking could not be deleted");
+  }
+  return data;
+}
+
+// Characters that have a meaning inside a PostgREST filter string
+const cleanSearchTerm = (term) => term.replace(/[,()%*\\]/g, " ").trim();
+
+// Search bookings by guest name or email, or by booking number
+export async function searchBookings(term) {
+  const q = cleanSearchTerm(term);
+  if (!q) return [];
+
+  const fields =
+    "id, startDate, endDate, numNights, status, cabins(name), guests!inner(fullName, email)";
+
+  const byGuest = supabase
+    .from("bookings")
+    .select(fields)
+    .or(`fullName.ilike.%${q}%,email.ilike.%${q}%`, { referencedTable: "guests" })
+    .order("startDate", { ascending: false })
+    .limit(6);
+
+  const byId = /^\d+$/.test(q)
+    ? supabase.from("bookings").select(fields).eq("id", Number(q))
+    : Promise.resolve({ data: [], error: null });
+
+  const [guestResult, idResult] = await Promise.all([byGuest, byId]);
+  const error = guestResult.error || idResult.error;
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not be searched");
+  }
+
+  // Booking-number match first, without duplicates
+  const results = [...idResult.data, ...guestResult.data];
+  return results.filter(
+    (booking, i) => results.findIndex((b) => b.id === booking.id) === i,
+  );
+}
+
+// Newest bookings created after the given ISO date, for notifications
+export async function getNewBookings(date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("id, created_at, numNights, startDate, cabins(name), guests(fullName)")
+    .gte("created_at", date)
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error(error);
+    throw new Error("New bookings could not be loaded");
   }
   return data;
 }

@@ -9,8 +9,11 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  max-height: calc(100vh - 4.8rem);
+  overflow-y: auto;
   background-color: var(--color-grey-0);
-  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
@@ -31,13 +34,16 @@ const Overlay = styled.div`
 const Button = styled.button`
   background: none;
   border: none;
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
   transition: all 0.2s;
   position: absolute;
-  top: 1.2rem;
-  right: 1.9rem;
+  top: 1.6rem;
+  right: 1.6rem;
 
   &:hover {
     background-color: var(--color-grey-100);
@@ -83,7 +89,7 @@ function Window({ children, name }) {
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
-        <Button onClick={close}>
+        <Button onClick={close} aria-label="Close">
           <HiXMark />
         </Button>
 

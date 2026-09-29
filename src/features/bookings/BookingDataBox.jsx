@@ -15,16 +15,17 @@ import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
 const StyledBookingDataBox = styled.section`
   /* Box */
   background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
 
   overflow: hidden;
 `;
 
 const Header = styled.header`
-  background-color: var(--color-brand-500);
+  background-color: var(--color-sidebar);
   padding: 2rem 4rem;
-  color: #e0e7ff;
+  color: #f6f1e7;
   font-size: 1.8rem;
   font-weight: 500;
   display: flex;
@@ -34,6 +35,7 @@ const Header = styled.header`
   svg {
     height: 3.2rem;
     width: 3.2rem;
+    color: var(--color-accent);
   }
 
   & div:first-child {
@@ -45,8 +47,8 @@ const Header = styled.header`
   }
 
   & span {
-    font-family: "Sono";
-    font-size: 2rem;
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
     margin-left: 4px;
   }
 `;
@@ -73,18 +75,17 @@ const Price = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1.6rem 3.2rem;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-md);
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+    props.$isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+    props.$isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
 
   & p:last-child {
-    text-transform: uppercase;
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   svg {
@@ -163,7 +164,7 @@ function BookingDataBox({ booking }) {
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
-        <Price isPaid={isPaid}>
+        <Price $isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
 

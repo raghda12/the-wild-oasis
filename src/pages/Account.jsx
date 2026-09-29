@@ -1,21 +1,22 @@
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
-import UpdateUserDataForm from  "../features/authentication/UpdateUserDataForm"
+import PageHeader from "../ui/PageHeader";
+import UpdateUserDataForm from "../features/authentication/UpdateUserDataForm";
 import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm";
 
 function Account() {
   return (
     <>
-      <Heading as="h1">Update your account</Heading>
+      <PageHeader title="Account" subtitle="Your profile and password" />
 
       <Row>
-        <Heading as="h3">Update user data</Heading>
-        <UpdateUserDataForm/>
+        <Heading as="h3">Profile</Heading>
+        <UpdateUserDataForm />
       </Row>
 
       <Row>
-        <Heading as="h3">Update password</Heading>
-        <UpdatePasswordForm/>
+        <Heading as="h3">Password</Heading>
+        <UpdatePasswordForm />
       </Row>
     </>
   );

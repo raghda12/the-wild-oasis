@@ -11,7 +11,8 @@ const Label = styled.span`
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--color-grey-800);
 
   & svg {
     width: 2rem;

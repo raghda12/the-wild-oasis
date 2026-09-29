@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Menu = styled.div`
@@ -11,33 +11,42 @@ const Menu = styled.div`
 `;
 
 const StyledToggle = styled.button`
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
-  border: none;
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--color-grey-600);
   transition: all 0.2s;
 
-  &:hover {
+  &:hover,
+  &[aria-expanded="true"] {
     background-color: var(--color-grey-100);
+    border-color: var(--color-grey-200);
   }
 
   & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-700);
+    width: 2rem;
+    height: 2rem;
   }
 `;
 
 const StyledList = styled.ul`
   position: fixed;
+  z-index: 100;
+  min-width: 21rem;
+  padding: 0.6rem;
 
   background-color: var(--color-grey-0);
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-grey-200);
+  box-shadow: var(--shadow-lg);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props.$position.x}px;
+  top: ${(props) => props.$position.y}px;
 `;
 
 const StyledButton = styled.button`
@@ -45,24 +54,42 @@ const StyledButton = styled.button`
   text-align: left;
   background: none;
   border: none;
-  padding: 1.2rem 2.4rem;
+  border-radius: var(--border-radius-sm);
+  padding: 1.1rem 1.2rem;
   font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-grey-800);
   transition: all 0.2s;
 
   display: flex;
   align-items: center;
-  gap: 1.6rem;
+  gap: 1rem;
 
   &:hover {
-    background-color: var(--color-grey-50);
+    background-color: var(--color-surface-2);
   }
 
   & svg {
-    width: 1.6rem;
-    height: 1.6rem;
-    color: var(--color-grey-400);
+    width: 1.8rem;
+    height: 1.8rem;
+    color: var(--color-grey-500);
     transition: all 0.3s;
   }
+
+  ${(props) =>
+    props.$danger &&
+    css`
+      color: var(--color-red-700);
+
+      & svg {
+        color: currentColor;
+      }
+
+      &:hover {
+        background-color: var(--color-red-100);
+        color: var(--color-red-800);
+      }
+    `}
 `;
 
 const MenusContext = createContext();
@@ -83,10 +110,11 @@ function Menus({ children }) {
   );
 }
 
-function Toggle({ id }) {
+function Toggle({ id, label = "Open actions" }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    e.stopPropagation();
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -97,7 +125,11 @@ function Toggle({ id }) {
   }
 
   return (
-    <StyledToggle onClick={handleClick}>
+    <StyledToggle
+      onClick={handleClick}
+      aria-label={label}
+      aria-expanded={openId === id}
+    >
       <HiEllipsisVertical />
     </StyledToggle>
   );
@@ -105,19 +137,19 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close, false);
 
   if (openId !== id) return null;
 
   return createPortal(
-    <StyledList position={position} ref={ref}>
+    <StyledList $position={position} ref={ref}>
       {children}
     </StyledList>,
     document.body
   );
 }
 
-function Button({ children, icon, onClick }) {
+function Button({ children, icon, onClick, danger = false, disabled }) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {
@@ -127,7 +159,7 @@ function Button({ children, icon, onClick }) {
 
   return (
     <li>
-      <StyledButton onClick={handleClick}>
+      <StyledButton onClick={handleClick} $danger={danger} disabled={disabled}>
         {icon}
         <span>{children}</span>
       </StyledButton>

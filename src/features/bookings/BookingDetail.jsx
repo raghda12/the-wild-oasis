@@ -16,6 +16,8 @@ import { HiArrowDownOnSquare , HiArrowUpOnSquare } from "react-icons/hi2";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
+import Empty from "../../ui/Empty";
+import { statusLabel, statusToTagName } from "../../utils/constants";
 
 
 const HeadingGroup = styled.div`
@@ -34,19 +36,15 @@ function BookingDetail() {
   const moveBack = useMoveBack();
   const navigate = useNavigate();
   if (isLoading) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
   const { status, id: bookingId } = booking;
-  const statusToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
-  };
 
   return (
     <>
       <Row type="horizontal">
         <HeadingGroup>
           <Heading as="h1">Booking #{bookingId}</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Tag type={statusToTagName[status]}>{statusLabel[status] ?? status}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
@@ -56,19 +54,17 @@ function BookingDetail() {
 
       <ButtonGroup>
         {status === "unconfirmed" && (
-          <Button
-            icon={<HiArrowDownOnSquare />}
-            onClick={() => navigate(`/checkin/${bookingId}`)}
-          >
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+            <HiArrowDownOnSquare />
             Check in
           </Button>
         )}
          {status === "checked-in" && (
                   <Button
-                    icon={<HiArrowUpOnSquare />}
                     onClick={() => checkout(bookingId)}
                     disabled={isCheckingOut}
                   >
+                    <HiArrowUpOnSquare />
                     Check out
                   </Button>
                 )}

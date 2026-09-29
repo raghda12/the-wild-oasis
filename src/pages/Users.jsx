@@ -1,10 +1,13 @@
-import Heading from "../ui/Heading";
+import PageHeader from "../ui/PageHeader";
 import SignupForm from "../features/authentication/SignupForm";
 
 function NewUsers() {
   return (
     <>
-      <Heading as="h1">Create a new user</Heading>
+      <PageHeader
+        title="Users"
+        subtitle="Create an account for a new staff member"
+      />
       <SignupForm />
     </>
   );

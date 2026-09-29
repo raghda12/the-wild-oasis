@@ -1,20 +1,37 @@
 import styled from "styled-components";
 import HeaderMenu from "./HeaderMenu";
 import UserAvatar from "../features/authentication/UserAvatar";
+import GlobalSearch from "../features/search/GlobalSearch";
+
 const StyledHeader = styled.header`
+  height: 7.2rem;
   background-color: var(--color-grey-0);
-  padding: 1.2rem 4.8rem;
-  border-bottom: 1px solid var(--color-grey-100);
+  padding: 0 4rem;
+  border-bottom: 1px solid var(--color-grey-200);
   display: flex;
-  gap: 2.4rem;
+  gap: 1.4rem;
   align-items: center;
-  justify-content: flex-end;
 `;
+
+const Spacer = styled.div`
+  flex-grow: 1;
+`;
+
+const Divider = styled.span`
+  width: 1px;
+  height: 2.8rem;
+  margin: 0 0.6rem;
+  background-color: var(--color-grey-200);
+`;
+
 export default function Header() {
   return (
     <StyledHeader>
-      <UserAvatar />
+      <GlobalSearch />
+      <Spacer />
       <HeaderMenu />
+      <Divider />
+      <UserAvatar />
     </StyledHeader>
   );
 }

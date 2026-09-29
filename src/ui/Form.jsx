@@ -1,15 +1,19 @@
 import styled, { css } from "styled-components";
 
-const Form = styled.form`
+// type is only used for styling, so keep it off the <form> element
+const Form = styled.form.withConfig({
+  shouldForwardProp: (prop) => prop !== "type",
+})`
   ${(props) =>
-    props.type === "regular" &&
+    (props.type ?? "regular") === "regular" &&
     css`
-      padding: 2.4rem 4rem;
+      padding: 2.8rem 3.2rem;
 
       /* Box */
       background-color: var(--color-grey-0);
-      border: 1px solid var(--color-grey-100);
-      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-grey-200);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
     `}
 
   ${(props) =>
@@ -17,11 +21,9 @@ const Form = styled.form`
     css`
       width: 80rem;
     `}
-    
+
   overflow: hidden;
   font-size: 1.4rem;
 `;
-Form.defaultProps = {
-  type: "regular"
-}
+
 export default Form;

@@ -5,8 +5,9 @@ const StyledCheckbox = styled.div`
   gap: 1.6rem;
 
   & input[type="checkbox"] {
-    height: 2.4rem;
-    width: 2.4rem;
+    height: 2.2rem;
+    width: 2.2rem;
+    flex-shrink: 0;
     outline-offset: 2px;
     transform-origin: 0;
     accent-color: var(--color-brand-600);

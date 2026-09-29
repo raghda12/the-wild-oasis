@@ -4,15 +4,18 @@ const StyledFormRow = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 1.2rem 0;
+  padding: 0.9rem 0;
 `;
 
 const Label = styled.label`
-  font-weight: 500;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-grey-600);
 `;
-6
+
 const Error = styled.span`
   font-size: 1.4rem;
+  font-weight: 600;
   color: var(--color-red-700);
 `;
 

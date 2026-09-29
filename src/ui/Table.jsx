@@ -3,49 +3,56 @@ import styled from "styled-components";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
-  border-radius: 7px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 `;
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
-  column-gap: 2.4rem;
+  grid-template-columns: ${(props) => props.$columns};
+  column-gap: 2rem;
   align-items: center;
   transition: none;
 `;
 
 const StyledHeader = styled(CommonRow)`
-  padding: 1.6rem 2.4rem;
+  height: 4.8rem;
+  padding: 0 2rem 0 2.4rem;
 
-  background-color: var(--color-grey-50);
-  border-bottom: 1px solid var(--color-grey-100);
+  background-color: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-grey-200);
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  font-weight: 600;
-  color: var(--color-grey-600);
+  letter-spacing: 0.06em;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-grey-500);
 `;
 
 const StyledRow = styled(CommonRow)`
-  padding: 1.2rem 2.4rem;
+  min-height: 7.4rem;
+  padding: 1.2rem 2rem 1.2rem 2.4rem;
+  transition: background-color 0.2s;
 
   &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
+    border-bottom: 1px solid var(--color-grey-200);
+  }
+
+  &:hover {
+    background-color: var(--color-surface-2);
   }
 `;
 
-const StyledBody = styled.section`
-  margin: 0.4rem 0;
-`;
+const StyledBody = styled.section``;
 
 const Footer = styled.footer`
-  background-color: var(--color-grey-50);
+  background-color: var(--color-surface-2);
+  border-top: 1px solid var(--color-grey-200);
   display: flex;
   justify-content: center;
-  padding: 1.2rem;
+  padding: 1.4rem 2rem 1.4rem 2.4rem;
 
   /* This will hide the footer when it contains no child elements. Possible thanks to the parent selector :has 🎉 */
   &:not(:has(*)) {
@@ -57,7 +64,8 @@ const Empty = styled.p`
   font-size: 1.6rem;
   font-weight: 500;
   text-align: center;
-  margin: 2.4rem;
+  color: var(--color-grey-500);
+  margin: 4rem 2.4rem;
 `;
 
 const TableContext = createContext();
@@ -73,7 +81,7 @@ function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="row" columns={columns} as="header">
+    <StyledHeader role="row" $columns={columns} as="header">
       {children}
     </StyledHeader>
   );
@@ -81,7 +89,7 @@ function Header({ children }) {
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" $columns={columns}>
       {children}
     </StyledRow>
   );

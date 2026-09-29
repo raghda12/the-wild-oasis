@@ -1,29 +1,31 @@
-import Logout from "../features/authentication/Logout"
-import ButtonIcon from "./ButtonIcon"
-import {HiOutlineUser} from "react-icons/hi"
-import styled from "styled-components"
-import { useNavigate } from "react-router-dom"
-import DarkModeToggle from "./DarkModeToggle"
+import ButtonIcon from "./ButtonIcon";
+import { HiOutlineUser } from "react-icons/hi2";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "./DarkModeToggle";
+import Notifications from "../features/notifications/Notifications";
+
 const StyledHeaderMenu = styled.ul`
   display: flex;
-  gap: 0.4rem;
-`
+  gap: 1rem;
+`;
+
 function HeaderMenu() {
-    const navigate = useNavigate();
-    return (
-        <StyledHeaderMenu>
-            <li>
-                <ButtonIcon onClick={()=>navigate("/account")}>
-                    <HiOutlineUser/>
-                </ButtonIcon>
-            </li>
-            <li>
-                <DarkModeToggle/>
-            </li>
-<li>
-    <Logout/>
-</li>
-        </StyledHeaderMenu>
-    )
+  const navigate = useNavigate();
+  return (
+    <StyledHeaderMenu>
+      <li>
+        <DarkModeToggle />
+      </li>
+      <li>
+        <Notifications />
+      </li>
+      <li>
+        <ButtonIcon onClick={() => navigate("/account")} aria-label="Account">
+          <HiOutlineUser />
+        </ButtonIcon>
+      </li>
+    </StyledHeaderMenu>
+  );
 }
-export default HeaderMenu
+export default HeaderMenu;

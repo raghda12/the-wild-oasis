@@ -16,9 +16,10 @@ import { useCheckin } from "./useCheckin";
 const Box = styled.div`
   /* Box */
   background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-  padding: 2.4rem 4rem;
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2.4rem 3.2rem;
 `;
 
 function CheckinBooking() {
@@ -42,7 +43,18 @@ const {settings , isLoading: isLoadingSettings}=useSettings();
 const optionalBreakfastPrice=settings.breakfastPrice * numNights * numGuests
   function handleCheckin() {
      if (!confirmPaid) return ;
-     checkin(bookingId);
+     if (addBreakfast) {
+       checkin({
+         bookingId,
+         breakfast: {
+           hasBreakfast: true,
+           extrasPrice: optionalBreakfastPrice,
+           totalPrice: totalPrice + optionalBreakfastPrice,
+         },
+       });
+     } else {
+       checkin({ bookingId, breakfast: {} });
+     }
   }
 
   return (
