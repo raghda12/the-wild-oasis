@@ -20,10 +20,15 @@ const Form = styled.form.withConfig({
     props.type === "modal" &&
     css`
       width: 80rem;
+      max-width: 100%;
     `}
 
   overflow: hidden;
   font-size: 1.4rem;
+
+  @media (max-width: 600px) {
+    padding: ${(props) => ((props.type ?? "regular") === "regular" ? "2rem 1.6rem" : "0")};
+  }
 `;
 
 export default Form;

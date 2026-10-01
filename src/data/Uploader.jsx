@@ -128,17 +128,24 @@ function Uploader() {
   return (
     <div
       style={{
-        marginTop: "auto",
-        backgroundColor: "#e0e7ff",
-        padding: "8px",
-        borderRadius: "5px",
-        textAlign: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        padding: "16px",
+        borderRadius: "14px",
         display: "flex",
         flexDirection: "column",
         gap: "8px",
       }}
     >
-      <h3>SAMPLE DATA</h3>
+      <h3
+        style={{
+          fontSize: "11px",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          color: "var(--color-sidebar-muted)",
+        }}
+      >
+        SAMPLE DATA
+      </h3>
 
       <Button onClick={uploadAll} disabled={isLoading}>
         Upload ALL

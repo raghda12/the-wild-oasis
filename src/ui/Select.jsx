@@ -9,6 +9,7 @@ const StyledSelect = styled.select`
   border-radius: var(--border-radius-md);
   background-color: var(--color-grey-0);
   color: var(--color-grey-800);
+  max-width: 100%;
   appearance: none;
   cursor: pointer;
   /* Chevron drawn with the current text colour */

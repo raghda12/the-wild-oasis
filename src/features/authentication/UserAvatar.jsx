@@ -5,6 +5,12 @@ const StyledUserAvatar = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
+  flex-shrink: 0;
+
+  /* The account button in the header is enough on phones */
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Avatar = styled.img`
@@ -21,6 +27,10 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.25;
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 const Name = styled.span`

@@ -8,6 +8,9 @@ const StyledFilter = styled.div`
   padding: 0.4rem;
   display: flex;
   gap: 0.4rem;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
 `;
 
 const FilterButton = styled.button`

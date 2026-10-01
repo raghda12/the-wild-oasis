@@ -7,7 +7,7 @@ const StyledTable = styled.div`
   background-color: var(--color-grey-0);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
-  overflow: hidden;
+  overflow-x: auto;
 `;
 
 const CommonRow = styled.div`
@@ -16,6 +16,7 @@ const CommonRow = styled.div`
   column-gap: 2rem;
   align-items: center;
   transition: none;
+  min-width: 88rem;
 `;
 
 const StyledHeader = styled(CommonRow)`
@@ -53,6 +54,8 @@ const Footer = styled.footer`
   display: flex;
   justify-content: center;
   padding: 1.4rem 2rem 1.4rem 2.4rem;
+  position: sticky;
+  left: 0;
 
   /* This will hide the footer when it contains no child elements. Possible thanks to the parent selector :has 🎉 */
   &:not(:has(*)) {

@@ -44,6 +44,14 @@ const Panel = styled.div`
   border-radius: 14px;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+
+  @media (max-width: 600px) {
+    position: fixed;
+    top: 8rem;
+    left: 1.6rem;
+    right: 1.6rem;
+    width: auto;
+  }
 `;
 
 const PanelHeader = styled.div`

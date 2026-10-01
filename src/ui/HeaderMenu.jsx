@@ -8,6 +8,11 @@ import Notifications from "../features/notifications/Notifications";
 const StyledHeaderMenu = styled.ul`
   display: flex;
   gap: 1rem;
+  flex-shrink: 0;
+
+  @media (max-width: 600px) {
+    gap: 0.6rem;
+  }
 `;
 
 function HeaderMenu() {

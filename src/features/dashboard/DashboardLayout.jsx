@@ -9,9 +9,17 @@ import DurationChart from "./DurationChart";
 import TodayActivity from "../check-in-out/TodayActivity";
 const StyledDashboardLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto 38rem auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 2rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
 `;
 function DashboardLayout() {
 const { bookings, isLoading: isLoading1 } = useRecentBookings();  

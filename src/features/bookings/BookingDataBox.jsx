@@ -25,6 +25,8 @@ const StyledBookingDataBox = styled.section`
 const Header = styled.header`
   background-color: var(--color-sidebar);
   padding: 2rem 4rem;
+  flex-wrap: wrap;
+  gap: 1.2rem;
   color: #f6f1e7;
   font-size: 1.8rem;
   font-weight: 500;
@@ -55,6 +57,10 @@ const Header = styled.header`
 
 const Section = styled.section`
   padding: 3.2rem 4rem 1.2rem;
+
+  @media (max-width: 600px) {
+    padding: 2.4rem 1.6rem 1.2rem;
+  }
 `;
 
 const Guest = styled.div`
@@ -97,6 +103,11 @@ const Price = styled.div`
 
 const Footer = styled.footer`
   padding: 1.6rem 4rem;
+
+  @media (max-width: 600px) {
+    padding: 1.6rem;
+  }
+
   font-size: 1.2rem;
   color: var(--color-grey-500);
   text-align: right;

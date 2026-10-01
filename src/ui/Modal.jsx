@@ -9,7 +9,8 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-height: calc(100vh - 4.8rem);
+  max-height: calc(100dvh - 4.8rem);
+  max-width: calc(100vw - 3.2rem);
   overflow-y: auto;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-200);
@@ -17,6 +18,10 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+
+  @media (max-width: 600px) {
+    padding: 5.2rem 2rem 2.4rem;
+  }
 `;
 
 const Overlay = styled.div`

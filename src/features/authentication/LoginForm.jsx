@@ -6,6 +6,11 @@ import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
 
+// A public demo account for portfolio visitors, set in .env (see .env.example)
+const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL;
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD;
+const hasDemo = Boolean(DEMO_EMAIL && DEMO_PASSWORD);
+
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -15,29 +20,39 @@ const StyledForm = styled.form`
     height: 5rem;
   }
 
-  & button[type="submit"] {
+  & button {
     width: 100%;
+  }
+
+  & button[type="submit"] {
     margin-top: 1rem;
   }
 `;
 
 function LoginForm() {
-  const [email, setEmail] = useState("raghda@gmail.com");
-  const [password, setPassword] = useState("115raghda");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
+
+  function submit(credentials) {
+    login(credentials, {
+      onSettled: () => {
+        setEmail("");
+        setPassword("");
+      },
+    });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login(
-      { email, password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
-        },
-      },
-    );
+    submit({ email, password });
+  }
+
+  function handleDemo() {
+    setEmail(DEMO_EMAIL);
+    setPassword(DEMO_PASSWORD);
+    submit({ email: DEMO_EMAIL, password: DEMO_PASSWORD });
   }
 
   return (
@@ -66,6 +81,17 @@ function LoginForm() {
       <Button type="submit" size="large" disabled={isLoading}>
         {!isLoading ? "Log in" : <SpinnerMini />}
       </Button>
+      {hasDemo && (
+        <Button
+          type="button"
+          variation="secondary"
+          size="large"
+          onClick={handleDemo}
+          disabled={isLoading}
+        >
+          Use demo account
+        </Button>
+      )}
     </StyledForm>
   );
 }

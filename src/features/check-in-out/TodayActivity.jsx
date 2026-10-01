@@ -18,7 +18,15 @@ const StyledToday = styled.div`
   flex-direction: column;
   gap: 1.2rem;
   grid-column: 1 / span 2;
-  min-height: 0;
+  height: 38rem;
+
+  @media (max-width: 1200px) {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 600px) {
+    padding: 2rem 1.6rem 1rem;
+  }
 `;
 
 const Count = styled.span`

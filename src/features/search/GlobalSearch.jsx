@@ -12,8 +12,12 @@ import { statusLabel, statusToTagName } from "../../utils/constants";
 
 const Wrapper = styled.div`
   position: relative;
-  width: 42rem;
-  max-width: 100%;
+  flex: 0 1 42rem;
+  min-width: 0;
+
+  @media (max-width: 600px) {
+    flex-grow: 1;
+  }
 `;
 
 const Field = styled.label`
@@ -72,6 +76,10 @@ const Kbd = styled.kbd`
   border: 1px solid var(--color-grey-200);
   color: var(--color-grey-500);
   white-space: nowrap;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Panel = styled.div`
@@ -87,6 +95,16 @@ const Panel = styled.div`
   border: 1px solid var(--color-grey-200);
   border-radius: 14px;
   box-shadow: var(--shadow-lg);
+
+  /* Full width under the header on phones */
+  @media (max-width: 600px) {
+    position: fixed;
+    top: 8rem;
+    left: 1.6rem;
+    right: 1.6rem;
+    width: auto;
+    max-height: calc(100dvh - 10rem);
+  }
 `;
 
 const Group = styled.p`

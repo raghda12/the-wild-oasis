@@ -84,6 +84,17 @@ npm run dev
 
 The app runs at http://localhost:5173.
 
+### Demo account (optional)
+
+The login page can show a **Use demo account** button for visitors. Create a separate demo user in Supabase, then copy `.env.example` to `.env.local` and fill in its credentials:
+
+```bash
+VITE_DEMO_EMAIL=demo@example.com
+VITE_DEMO_PASSWORD=your-demo-password
+```
+
+The button only appears when both values are set. These values are included in the built JavaScript, so only ever use a throwaway demo account here, never your personal one.
+
 ### Scripts
 
 | Command | What it does |
@@ -92,6 +103,18 @@ The app runs at http://localhost:5173.
 | `npm run build` | Build for production into `dist/` |
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
+
+---
+
+## Deployment
+
+The app is a static single-page app, so any static host works.
+
+1. Run `npm run build` (or let the host run it). The output is in `dist/`.
+2. If you want the demo button, set `VITE_DEMO_EMAIL` and `VITE_DEMO_PASSWORD` in the host's environment variables.
+3. Routing is handled in the browser, so every path must serve `index.html`. This is already configured:
+   - **Netlify**: [`public/_redirects`](public/_redirects)
+   - **Vercel**: [`vercel.json`](vercel.json)
 
 ---
 
@@ -119,6 +142,8 @@ Email and password sign-in through Supabase Auth. Users are created from the **U
 
 ### Row Level Security
 Enable RLS on every table and allow the operations the app needs for **authenticated** users. The app reads and writes all four tables, so logged-out visitors should not be able to read them.
+
+If you share a demo account publicly, consider making it read-only with RLS policies so visitors cannot delete the data. Otherwise keep the Uploader handy to restore it.
 
 ### Sample data
 [`src/data/Uploader.jsx`](src/data/Uploader.jsx) fills the database with sample cabins, guests and bookings, with dates relative to today. To use it, uncomment `<Uploader />` in [`src/ui/Sidebar.jsx`](src/ui/Sidebar.jsx), log in, and click the upload buttons. Comment it out again afterwards.

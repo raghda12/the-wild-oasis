@@ -64,12 +64,21 @@ const Panel = styled.section`
   align-items: center;
   justify-content: center;
   padding: 4.8rem;
+
+  @media (max-width: 600px) {
+    padding: 8rem 2rem 4rem;
+  }
 `;
 
 const Toggle = styled.div`
   position: absolute;
   top: 3.2rem;
   right: 4rem;
+
+  @media (max-width: 600px) {
+    top: 2rem;
+    right: 2rem;
+  }
 `;
 
 const Content = styled.div`

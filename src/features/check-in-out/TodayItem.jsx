@@ -14,6 +14,16 @@ const StyledTodayItem = styled.li`
   font-size: 1.4rem;
   padding: 1.1rem 0;
   border-top: 1px solid var(--color-grey-200);
+
+  @media (max-width: 600px) {
+    grid-template-columns: 9.6rem 1fr auto;
+    gap: 1rem;
+
+    & > img,
+    & > div:nth-of-type(2) {
+      display: none;
+    }
+  }
 `;
 
 const Guest = styled.div`

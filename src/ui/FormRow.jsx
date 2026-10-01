@@ -20,6 +20,11 @@ const StyledFormRow = styled.div`
     border-bottom: 1px solid var(--color-grey-200);
   }
 
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
   &:has(button) {
     display: flex;
     justify-content: flex-end;
